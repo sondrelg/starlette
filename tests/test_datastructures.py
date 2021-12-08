@@ -1,5 +1,3 @@
-import io
-
 import pytest
 
 from starlette.datastructures import (
@@ -228,7 +226,7 @@ async def test_upload_file():
 
 
 def test_formdata():
-    upload = io.BytesIO(b"test")
+    upload = UploadFile("test")
     form = FormData([("a", "123"), ("a", "456"), ("b", upload)])
     assert "a" in form
     assert "A" not in form
@@ -339,7 +337,7 @@ def test_multidict():
     assert repr(q) == "MultiDict([('a', '123'), ('b', '456')])"
 
     q = MultiDict([("a", "123"), ("b", "456")])
-    q.update(None)
+    q.update(None)  # type: ignore
     assert repr(q) == "MultiDict([('a', '123'), ('b', '456')])"
 
     q = MultiDict([("a", "123"), ("a", "456")])
